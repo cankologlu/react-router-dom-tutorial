@@ -10,7 +10,7 @@ export default function ErrorPage () {
       <h1>Neigh!🐴</h1>
       <p>Sorry, an unexpected error has occured.</p>
       <p>
-        <i>{error.statusText || error.message}</i>
+        <i>{error.statusText  || error.message}</i>
       </p>
     </div>
   )
