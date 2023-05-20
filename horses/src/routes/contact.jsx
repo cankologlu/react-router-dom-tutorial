@@ -1,22 +1,31 @@
-import { Form } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
+import { getContact } from "../contacts";
+
+export async function loader({ params }) {
+  const contact = await getContact(params.contactId);
+  return { contact };
+}
+
+
 
 
 export default function Contact() {
 
+  const { contact } = useLoaderData(); 
 
-  const contact = {
-    first: "Horses",
-    last: "Unleashed",
-    avatar: "https://placekitten.com/g/200/200",
-    twitter: "horse_away",
-    notes: "Notes here!",
-    favorite: true
-  };
+  // const contact = {
+  //   first: "Horses",
+  //   last: "Unleashed",
+  //   avatar: "https://placekitten.com/g/200/200",
+  //   twitter: "horse_away",
+  //   notes: "Notes here!",
+  //   favorite: true
+  // };
 
   return (
     <div id="contact">
       <div>
-        <img key={contact.avatar} src={contact.avatar || null} alt="is me" />
+        <img key={contact.avatar} src={contact.avatar || null} />
       </div>
       <div>
         <h1>
