@@ -1,11 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import Root from './routes/root.jsx'
+import Root, { loader as rootLoader } from './routes/root.jsx'
 import ErrorPage from './components/error-page.jsx'
-import { element } from 'prop-types'
 import Contact from './routes/contact.jsx'
 
 
@@ -13,16 +11,19 @@ const router = createBrowserRouter([
   {
     path:"/",
     element: <Root/>,
-    errorElement: <ErrorPage/>
+    errorElement: <ErrorPage/>,
+    loader: rootLoader,
+    children: [
+      {
+        path:"contacts/:contactid",
+        element: <Contact />
+      }
+    ]
   },
   {
     path:"/about",
     element: <p>this page aboot</p>
   },
-  {
-    path:"contacts/:contactId",
-    element: <Contact/>
-  }
 ]);
 
 
