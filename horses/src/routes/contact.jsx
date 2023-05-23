@@ -1,26 +1,23 @@
-import { Form, useLoaderData } from "react-router-dom";
-import { getContact } from "../contacts";
+import { Form, useLoaderData, useFetcher } from "react-router-dom";
+import { getContact, updateContact } from "../contacts";
 
 export async function loader({ params }) {
   const contact = await getContact(params.contactId);
   return { contact };
 }
 
-
+export async function action({request, params}) {
+  let formData = await request.formData();
+  return updateContact(params.contactId, {
+    favorite: formData.get("favorite") === "true",
+  });
+}
 
 
 export default function Contact() {
 
-  const { contact } = useLoaderData(); 
   
-  // const contact = {
-  //   first: "Horses",
-  //   last: "Unleashed",
-  //   avatar: "https://placekitten.com/g/200/200",
-  //   twitter: "horse_away",
-  //   notes: "Notes here!",
-  //   favorite: true
-  // };
+  const { contact } = useLoaderData(); 
 
   return (
     <div id="contact">
@@ -71,9 +68,13 @@ export default function Contact() {
  }
 
 function Favorite({contact}) {
+
+  const fetcher = useFetcher();
   let favorite = contact.favorite;
+
+
   return( 
-    <Form method="post">
+    <fetcher.Form method="post">
       <button name="favorite"
       value={favorite ? "false" : "true"}
       aria-label={
@@ -81,6 +82,6 @@ function Favorite({contact}) {
       }>
         {favorite ? "★":"☆"}
       </button>
-    </Form>
+    </fetcher.Form>
   )
  }
