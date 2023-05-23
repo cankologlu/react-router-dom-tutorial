@@ -21,7 +21,7 @@ useEffect(() => {
         <Form id="search-form" role="search">
           <input
             id="q"
-            clasName = {searching ? "loading" : ""}
+            className = {searching ? "loading" : ""}
             aria-label="Search contacts"
             placeholder="Search"
             type="search"
